@@ -22,7 +22,8 @@ class Heading extends StatelessWidget {
       text,
       style: TextStyle(
           color: textColor,
-          fontSize: 16.sp,
+          fontSize: 20.sp,
+          fontFamily: 'Helvetica',
           fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
       textAlign: isCenterAlign ? TextAlign.center : TextAlign.start,
     );

@@ -21,6 +21,7 @@ class Paragraph extends StatelessWidget {
       text,
       style: TextStyle(
           color: textColor,
+          fontFamily: 'Helvetica',
           fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
       textAlign: isCenterAlign ? TextAlign.center : TextAlign.start,
     );

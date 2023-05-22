@@ -16,11 +16,19 @@ class BasicTextField extends StatelessWidget {
       width: utilsWidth,
       child: TextField(
         textAlignVertical: TextAlignVertical.bottom,
+        cursorColor: primaryColor,
         decoration: InputDecoration(
           hintText: hintText,
-          enabledBorder: OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide:
                 const BorderSide(width: 1, color: greyColor), //<-- SEE HERE
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(
+              width: 1,
+              color: greyColor,
+            ), //<-- SEE HERE
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),

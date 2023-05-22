@@ -1,4 +1,5 @@
-import 'package:app/views/authentication/loginScreen.dart';
+import 'package:app/constants.dart';
+import 'package:app/views/mainMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,9 +17,15 @@ class App extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return const MaterialApp(
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: LoginScreen(),
+          theme: ThemeData(
+            inputDecorationTheme: const InputDecorationTheme(
+              filled: true, //<-- SEE HERE
+              fillColor: whiteColor, //<-- SEE HERE
+            ),
+          ),
+          home: MainMenu(),
         );
       },
     );

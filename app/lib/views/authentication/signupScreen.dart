@@ -1,3 +1,4 @@
+import 'package:app/views/homeScreen.dart';
 import 'package:app/views/widgets/buttons/basicButton.dart';
 import 'package:app/views/widgets/textfields/basicTextField.dart';
 import 'package:app/views/widgets/texts/heading.dart';
@@ -64,7 +65,17 @@ class SignupScreen extends StatelessWidget {
             SizedBox(
               height: paddingHeight,
             ),
-            BasicButton(buttonText: "Submit"),
+            GestureDetector(
+              child: BasicButton(buttonText: "Submit"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
+                );
+              },
+            ),
             SizedBox(
               height: paddingHeight,
             ),
