@@ -9,6 +9,7 @@ const appBarColor = Colors.white;
 const primaryColor = Color(0xff5195F6);
 const lightPrimaryColor = Color(0xffE1EDFF);
 const greyColor = Color(0xffB6B6B6);
+const darkgreyColor = Color.fromARGB(255, 125, 125, 125);
 const backgroundColor = Colors.white;
 const whiteColor = Colors.white;
 const blackColor = Colors.black;
