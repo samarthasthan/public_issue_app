@@ -17,6 +17,7 @@ class Users(Base):
     address= Column(String,nullable=False)
 
     issues = relationship('Issues', back_populates='owner')
+    incharges = relationship('Incharges', back_populates='users')
 
 class Issues(Base):
     __tablename__="issues"
@@ -30,7 +31,15 @@ class Issues(Base):
     location=  Column(Integer,nullable= False)
     owner_id = Column(String, ForeignKey('users.user_id'))
     
-
-
     owner = relationship('Users', back_populates='issues')
+    incharges = relationship('Incharges', back_populates='issues')
 
+class Incharges(Base):
+    __tablename__="incharges"
+
+    incharge_id= Column(String,primary_key=True,default=generate_uuid,index=True)
+    user_id= Column(String, ForeignKey('users.user_id'))
+    issue_id = Column(String, ForeignKey('issues.issue_id'))
+
+    users = relationship('Users', back_populates='incharges')
+    issues = relationship('Issues', back_populates='incharges')
