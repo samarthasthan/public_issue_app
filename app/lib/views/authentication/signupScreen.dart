@@ -1,4 +1,7 @@
-import 'package:app/views/homeScreen.dart';
+import 'dart:convert';
+
+import 'package:app/views/authentication/loginScreen.dart';
+import 'package:app/views/mainMenu.dart';
 import 'package:app/views/widgets/buttons/basicButton.dart';
 import 'package:app/views/widgets/textfields/basicTextField.dart';
 import 'package:app/views/widgets/texts/heading.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants.dart';
+import '../../models/authentication/signUpModel.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -23,6 +27,7 @@ class SignupScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               height: paddingHeight,
@@ -49,9 +54,19 @@ class SignupScreen extends StatelessWidget {
             SizedBox(
               height: paddingHeight,
             ),
-            BasicTextField(hintText: 'Aadhaar Number'),
             SizedBox(
               height: 5.h,
+            ),
+            Visibility(
+              visible: false,
+              child: SizedBox(
+                width: utilsWidth,
+                child: Paragraph(
+                    text: '',
+                    textColor: redColor,
+                    isCenterAlign: false,
+                    isBold: false),
+              ),
             ),
             SizedBox(
               width: utilsWidth,
@@ -67,13 +82,17 @@ class SignupScreen extends StatelessWidget {
             ),
             GestureDetector(
               child: BasicButton(buttonText: "Submit"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
-                  ),
-                );
+              onTap: () async {
+                SignUpModel signUpResponse = await loginController.login();
+                String? message = signUpResponse.data;
+                print(message); // Access the message value
+
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => MainMenu(),
+                //   ),
+                // );
               },
             ),
             SizedBox(
@@ -99,11 +118,21 @@ class SignupScreen extends StatelessWidget {
                     textColor: blackColor,
                     isCenterAlign: true,
                     isBold: false),
-                Paragraph(
-                    text: ' Sign Up',
-                    textColor: primaryColor,
-                    isCenterAlign: true,
-                    isBold: false)
+                GestureDetector(
+                  child: Paragraph(
+                      text: ' Login',
+                      textColor: primaryColor,
+                      isCenterAlign: true,
+                      isBold: false),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
+                )
               ],
             )
           ],

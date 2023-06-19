@@ -12,9 +12,11 @@ class Users(Base):
     user_id= Column(String,primary_key=True,default=generate_uuid,index=True)
     full_name= Column(String,nullable= False)
     aadhaar_no = Column(String,nullable=False)
+    profile= Column(String,nullable=False)
     dob= Column(Date,nullable=False)
     phone_no= Column(Integer,nullable=True)
     address= Column(String,nullable=False)
+    mail= Column(String,nullable=False)
 
     issues = relationship('Issues', back_populates='owner')
     incharges = relationship('Incharges', back_populates='users')
@@ -29,10 +31,13 @@ class Issues(Base):
     video =  Column(String,nullable= False)
     audio=  Column(String,nullable= False)
     location=  Column(Integer,nullable= False)
+    category_id=Column(String, ForeignKey('categories.category_id'))
     owner_id = Column(String, ForeignKey('users.user_id'))
     
+
     owner = relationship('Users', back_populates='issues')
     incharges = relationship('Incharges', back_populates='issues')
+    category = relationship('Category', back_populates='issues')
 
 class Incharges(Base):
     __tablename__="incharges"
@@ -43,3 +48,12 @@ class Incharges(Base):
 
     users = relationship('Users', back_populates='incharges')
     issues = relationship('Issues', back_populates='incharges')
+
+
+class Category(Base):
+    __tablename__="categories"
+
+    category_id= Column(String,primary_key=True,default=generate_uuid,index=True)
+    category_title=  Column(String,nullable= False)
+    category_slug= Column(String,nullable= False)
+    issues = relationship('Issues', back_populates='category')
