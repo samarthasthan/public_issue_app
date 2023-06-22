@@ -40,6 +40,8 @@ dependencies:
   cached_network_image: ^3.2.2
   http: ^0.13.0
   get: ^4.6.1  
+  flutter_otp_text_field: ^1.1.1
+  api_cache_manager: ^1.0.2
 
 dev_dependencies:
   flutter_test:

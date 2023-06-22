@@ -9,3 +9,7 @@ class UserBase(BaseModel):
     phone_no:int
     address:str
     mail:str
+
+class UserAuthBase(BaseModel):
+    aadhaar_no:str
+    phone_no:int

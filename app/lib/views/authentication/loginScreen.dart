@@ -1,14 +1,27 @@
 import 'package:app/constants.dart';
 import 'package:app/controllers/loginController.dart';
+import 'package:app/views/authentication/OTPScreen.dart';
 import 'package:app/views/authentication/signupScreen.dart';
 import 'package:app/views/widgets/texts/paragraph.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../widgets/buttons/basicButton.dart';
-import 'package:flutter/services.dart';
 import '../widgets/texts/heading.dart';
+
+var isLoading = false.obs;
+RxBool validUser = false.obs;
+
+void togglevalidUser(bool value) {
+  validUser.value = value;
+}
+
+void closeKeyBaord() {
+  FocusManager.instance.primaryFocus?.unfocus();
+}
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -51,8 +64,14 @@ class LoginScreen extends StatelessWidget {
                   height: utilsHeight,
                   width: utilsWidth,
                   child: TextField(
+                    keyboardType: TextInputType.phone,
                     controller: textFieldContoller,
-                    keyboardType: TextInputType.number,
+                    onChanged: (val) {
+                      if (val.length == 10) {
+                        //10 is the length of the phone number you're allowing
+                        closeKeyBaord();
+                      }
+                    },
                     textAlignVertical: TextAlignVertical.bottom,
                     cursorColor: primaryColor,
                     decoration: InputDecoration(
@@ -74,8 +93,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => Visibility(
-                    visible:
-                        loginController.validUser.value == true ? true : false,
+                    visible: validUser.value == true ? true : false,
                     child: Padding(
                       padding: EdgeInsets.only(top: 4.sp, left: 2.sp),
                       child: Paragraph(
@@ -90,12 +108,47 @@ class LoginScreen extends StatelessWidget {
                   height: paddingHeight,
                 ),
                 GestureDetector(
-                  child: BasicButton(
-                    buttonText: "Get OTP",
+                  child: Column(
+                    children: [
+                      Obx(
+                        () => Visibility(
+                          visible: isLoading.isFalse ? true : false,
+                          child: BasicButton(
+                            buttonText: "Get OTP",
+                          ),
+                        ),
+                      ),
+                      Obx(() => Visibility(
+                            visible: isLoading.isTrue ? true : false,
+                            child: Container(
+                              height: utilsHeight,
+                              width: utilsWidth,
+                              decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: const Center(
+                                  child: CupertinoActivityIndicator(
+                                color: whiteColor,
+                              )),
+                            ),
+                          )),
+                    ],
                   ),
                   onTap: () async {
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    loginController.togglevalidUser();
+                    // closeKeyBaord();
+                    isLoading.value = true;
+                    var result =
+                        await loginController.login(textFieldContoller.text);
+                    if (result.accessToken == null) {
+                      isLoading.value = false;
+                      togglevalidUser(true);
+                    } else if (result.accessToken != null) {
+                      access_token = result.accessToken.toString();
+                      isLoading.value = false;
+                      // ignore: use_build_context_synchronously
+                      Get.to(OTPScreen());
+                    }
                   },
                 ),
                 SizedBox(
@@ -121,7 +174,7 @@ class LoginScreen extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
+                            builder: (context) => const SignupScreen(),
                           ),
                         );
                       },

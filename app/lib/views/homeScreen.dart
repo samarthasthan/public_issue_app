@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:app/constants.dart';
 import 'package:app/views/widgets/textfields/basicTextField.dart';
 import 'package:app/views/widgets/texts/heading.dart';
@@ -369,16 +370,21 @@ class TopWidgets extends StatelessWidget {
                             isBold: true),
                       ],
                     ),
-                    SizedBox(
-                      height: 54.h,
-                      width: 54.w,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          'https://pikwizard.com/pw/small/39573f81d4d58261e5e1ed8f1ff890f6.jpg',
-                          fit: BoxFit.cover,
+                    InkWell(
+                      child: SizedBox(
+                        height: 54.h,
+                        width: 54.w,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            'https://pikwizard.com/pw/small/39573f81d4d58261e5e1ed8f1ff890f6.jpg',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
+                      onTap: () async {
+                        await APICacheManager().deleteCache("access_token");
+                      },
                     )
                   ],
                 ),

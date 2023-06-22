@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:app/views/authentication/loginScreen.dart';
-import 'package:app/views/mainMenu.dart';
 import 'package:app/views/widgets/buttons/basicButton.dart';
 import 'package:app/views/widgets/textfields/basicTextField.dart';
 import 'package:app/views/widgets/texts/heading.dart';
@@ -10,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants.dart';
-import '../../models/authentication/signUpModel.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -82,18 +78,7 @@ class SignupScreen extends StatelessWidget {
             ),
             GestureDetector(
               child: BasicButton(buttonText: "Submit"),
-              onTap: () async {
-                SignUpModel signUpResponse = await loginController.login();
-                String? message = signUpResponse.data;
-                print(message); // Access the message value
-
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => MainMenu(),
-                //   ),
-                // );
-              },
+              onTap: () async {},
             ),
             SizedBox(
               height: paddingHeight,
