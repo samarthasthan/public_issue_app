@@ -27,16 +27,17 @@ successful_posts = 0
 failed_posts = 0
 
 # Generate 100 posts using random locations within India
-for post_number in range(1, 10001):  # Loop with a range to keep track of the post number
-    # Generate random latitude and longitude within the approximate geographical range of India
-    latitude = random.uniform(8.0, 37.0)
-    longitude = random.uniform(68.0, 98.0)
+for post_number in range(1, 1000):
+    while True:
+        # Generate random latitude and longitude within the approximate geographical range of India
+        latitude = round(random.uniform(8.0, 37.0), 6)  # Round latitude to 6 decimal places
+        longitude = round(random.uniform(68.0, 98.0), 6)  # Round longitude to 6 decimal places
+        
+        # Check if the generated latitude and longitude are within the valid range
+        if 8.0 <= latitude <= 37.0 and 68.0 <= longitude <= 98.0:
+            break
     
-    # Ensure latitude and longitude are within valid ranges
-    if not (8.0 <= latitude <= 37.0) or not (68.0 <= longitude <= 98.0):
-        print(f"Invalid latitude or longitude generated for post {post_number}. Skipping.")
-        continue
-    
+    # Rest of the code to generate post data
     random_location = location_data.sample(n=1).iloc[0]
     city = random_location['officename']
     state = random_location['statename']

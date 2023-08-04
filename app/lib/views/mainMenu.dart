@@ -1,10 +1,13 @@
 import 'package:app/constants.dart';
 import 'package:app/views/homeScreen.dart';
+import 'package:app/views/newComplaint.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -18,13 +21,24 @@ class _MainMenuState extends State<MainMenu>
     with AutomaticKeepAliveClientMixin {
   int _currentIndex = 0;
 
+  void _showBottomSheet() {
+    showCupertinoModalBottomSheet(
+      expand: true,
+      context: context,
+      builder: (context) => Container(
+        child: NewComplaintScreen(),
+        padding: EdgeInsets.all(16.0.sp),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: [HomeScreen(), HomeScreen(), HomeScreen()],
+        children: [HomeScreen(), NewComplaintScreen(), HomeScreen()],
       ),
       bottomNavigationBar: Container(
         decoration:
@@ -40,7 +54,13 @@ class _MainMenuState extends State<MainMenu>
           showUnselectedLabels: true,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           currentIndex: _currentIndex,
-          onTap: (int index) => setState(() => _currentIndex = index),
+          onTap: (int index) {
+            if (index == 1) {
+              _showBottomSheet();
+            } else {
+              setState(() => _currentIndex = index);
+            }
+          },
           items: [
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -73,7 +93,7 @@ class _MainMenuState extends State<MainMenu>
                     BlendMode.srcIn,
                   ),
                 ),
-                label: 'Activists'),
+                label: 'Add'),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/person-outline.svg',

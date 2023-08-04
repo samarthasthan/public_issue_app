@@ -25,7 +25,7 @@ def random_date(start, end):
 
 # Generate 100 sample data entries
 sample_data = []
-for i in range(100):
+for i in range(1000):
     data = {
         "full_name": f"Full Name {i}",
         "aadhaar_no": generate_aadhaar_number(),

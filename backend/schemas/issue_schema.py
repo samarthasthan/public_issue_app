@@ -2,11 +2,6 @@ import datetime
 
 from pydantic import BaseModel
 
-class CategoryOut(BaseModel):
-    category_title:str
-
-    class Config:
-        orm_mode = True
 
 class UserBaseOut(BaseModel):
     full_name:str
@@ -16,19 +11,34 @@ class UserBaseOut(BaseModel):
     class Config:
         orm_mode = True
 
+class LocationIn(BaseModel):
+    continent:str
+    continentCode:str
+    countryName:str
+    countryCode:str
+    principalSubdivision:str
+    principalSubdivisionCode:str
+    city:str
+    locality:str
+    postcode:int
+
 class IssueBaseIn(BaseModel):
     title:str
     description:str
     image:str
     video:str
     audio:str
-    location:str
-    category_id:str
+    latitude:float
+    longitude:float
+    pluscode:str
     owner_id:str
+
+    location:LocationIn
 
 
     class Config:
         orm_mode = True
+
 
 class IssueBaseOut(BaseModel):
     title:str
@@ -36,10 +46,14 @@ class IssueBaseOut(BaseModel):
     image:str
     video:str
     audio:str
-    location:str
-    category:CategoryOut
+    latitude:float
+    longitude:float
+    pluscode:str
     owner:UserBaseOut
+
+    locations:LocationIn
 
 
     class Config:
         orm_mode = True
+

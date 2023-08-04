@@ -1,5 +1,5 @@
 from secrets import token_hex
-from sqlalchemy import Column, ForeignKey,Integer,String,Date
+from sqlalchemy import Column, ForeignKey,Integer,String,Date,Double
 from database import Base
 from sqlalchemy.orm import relationship
 
@@ -30,14 +30,18 @@ class Issues(Base):
     image =  Column(String,nullable= False)
     video =  Column(String,nullable= False)
     audio=  Column(String,nullable= False)
-    location=  Column(Integer,nullable= False)
-    category_id=Column(String, ForeignKey('categories.category_id'))
+    latitude=  Column(Double,nullable= False)
+    longitude=  Column(Double,nullable= False)
+    pluscode = Column(String,nullable= False)
+    # category_id=Column(String, ForeignKey('categories.category_id'))
     owner_id = Column(String, ForeignKey('users.user_id'))
+    location= Column(String, ForeignKey('locations.location_id'))
     
 
     owner = relationship('Users', back_populates='issues')
     incharges = relationship('Incharges', back_populates='issues')
-    category = relationship('Category', back_populates='issues')
+    # category = relationship('Category', back_populates='issues')
+    locations = relationship('Locations', back_populates='issues')
 
 class Incharges(Base):
     __tablename__="incharges"
@@ -50,10 +54,28 @@ class Incharges(Base):
     issues = relationship('Issues', back_populates='incharges')
 
 
-class Category(Base):
-    __tablename__="categories"
+# class Category(Base):
+#     __tablename__="categories"
 
-    category_id= Column(String,primary_key=True,default=generate_uuid,index=True)
-    category_title=  Column(String,nullable= False)
-    category_slug= Column(String,nullable= False)
-    issues = relationship('Issues', back_populates='category')
+#     category_id= Column(String,primary_key=True,default=generate_uuid,index=True)
+#     category_title=  Column(String,nullable= False)
+#     category_slug= Column(String,nullable= False)
+#     issues = relationship('Issues', back_populates='category')
+
+class Locations(Base):
+    __tablename__ = "locations"
+
+    location_id = Column(String, primary_key=True, default=generate_uuid, index=True)
+    continent = Column(String, nullable=False)
+    continentCode = Column(String, nullable=False)
+    countryName = Column(String, nullable=False)
+    countryCode = Column(String, nullable=False)
+    principalSubdivision = Column(String, nullable=False)
+    principalSubdivisionCode = Column(String, nullable=False)
+    city = Column(String,  nullable=False) 
+    locality = Column(String, nullable=False)
+    postcode = Column(Integer, unique=True, nullable=True)  # Keeping unique constraint for postcode
+
+    issues = relationship('Issues', back_populates='locations')
+
+

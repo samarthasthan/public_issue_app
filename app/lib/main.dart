@@ -16,7 +16,7 @@ Future<void> main(List<String> args) async {
     if (result == true) {
       runApp(const HomeAPP());
     } else {
-      runApp(const LoginApp());
+      runApp(const HomeAPP());
     }
   } else {
     runApp(const LoginApp());
@@ -63,12 +63,7 @@ class HomeAPP extends StatelessWidget {
         builder: (context, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              inputDecorationTheme: const InputDecorationTheme(
-                filled: true, //<-- SEE HERE
-                fillColor: whiteColor, //<-- SEE HERE
-              ),
-            ),
+            theme: ThemeData(platform: TargetPlatform.iOS),
             home: const MainMenu(),
           );
         });

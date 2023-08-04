@@ -13,9 +13,7 @@ class LoginController extends GetxController {
     };
 
     final data =
-        '{\n  "aadhaar_no": "4c3348a7aef55c2f06fc6d4b526aa38e",\n  "phone_no":' +
-            phone +
-            '\n}';
+        '{\n  "aadhaar_no": "123456789",\n  "phone_no":' + phone + '\n}';
 
     final url = Uri.parse(base_url + "/login");
 

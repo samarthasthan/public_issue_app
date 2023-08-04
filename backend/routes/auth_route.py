@@ -59,7 +59,7 @@ async def login(
 @router.post(
     "/signup",
 )
-def sing_up(user_data: users_schema.UserBase, db: SessionLocal = Depends(get_db)):
+async def sing_up(user_data: users_schema.UserBase, db: SessionLocal = Depends(get_db)):
     user = db.query(models.Users).filter(models.Users.mail == user_data.mail).first()
     if user:
         return {

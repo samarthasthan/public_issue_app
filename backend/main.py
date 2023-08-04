@@ -9,4 +9,4 @@ models.Base.metadata.create_all(engine)
 
 # app.include_router(app_routes.router)
 app.include_router(auth_route.router)
-# app.include_router(issue_route.router)
+app.include_router(issue_route.router)

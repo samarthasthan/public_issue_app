@@ -42,6 +42,10 @@ dependencies:
   get: ^4.6.1  
   flutter_otp_text_field: ^1.1.1
   api_cache_manager: ^1.0.2
+  geolocator: ^9.0.2
+  modal_bottom_sheet: ^3.0.0-pre
+  file_picker: ^5.3.3
+  video_thumbnail: ^0.5.3
 
 dev_dependencies:
   flutter_test:

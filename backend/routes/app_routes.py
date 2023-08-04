@@ -7,7 +7,7 @@ from database import SessionLocal, get_db
 router= APIRouter(tags=["App"])
 
 @router.get("/app/issues/",response_model=app_schema.HomePage)
-def get_issues(user_id:str ,db: SessionLocal = Depends(get_db)):
+async def get_issues(user_id:str ,db: SessionLocal = Depends(get_db)):
     issues = db.query(models.Issues).all()
     data = {
         "registered_complaint":9,
